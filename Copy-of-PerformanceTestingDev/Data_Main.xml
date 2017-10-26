@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="581e6779-437a-4c9c-9f86-234d1baa5bd4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Data_Main" searchProperties="true" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="581e6779-437a-4c9c-9f86-234d1baa5bd4fileName">Data_Main</con:setting></con:settings><con:testStep type="groovy" name="Copy of GroovyScriptToTransferToken" id="694721db-8208-47c8-9240-43b50893babd"><con:settings/><con:config><script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+def csvFilePath = "/Users/eddieboyinipalli/Desktop/100UsersTokens.xls"
+context.fileReader = new BufferedReader(new FileReader(csvFilePath))
+
+rowsData = context.fileReader.readLines()
+int rowsize = rowsData.size()
+for(int i =0;  i &lt; 10;  i++)
+{
+
+    rowdata = rowsData[i]
+   String[] data = rowdata.split(",")
+   groovyUtils.setPropertyValue("createNB", "X-Authentication-Info", data[1].replaceAll('"',''))
+   groovyUtils.setPropertyValue("createExpUnderNB-1", "X-Authentication-Info", data[1].replaceAll('"',''))
+   groovyUtils.setPropertyValue("addTextElementInExp-11", "X-Authentication-Info", data[1].replaceAll('"',''))
+   groovyUtils.setPropertyValue("patchTextElementInExp-11", "X-Authentication-Info", data[1].replaceAll('"',''))
+   groovyUtils.setPropertyValue("addCDDElementInExp-11", "X-Authentication-Info", data[1].replaceAll('"',''))
+   groovyUtils.setPropertyValue("patchCDDElementHtmlExp-11", "X-Authentication-Info", data[1].replaceAll('"',''))
+   
+
+    testRunner.runTestStepByName("createNB")
+    testRunner.runTestStepByName("createExpUnderNB-1")
+    testRunner.runTestStepByName("addTextElementInExp-11")
+    testRunner.runTestStepByName("Groovy ScripttoGetTextEditDataLink")
+    testRunner.runTestStepByName("PropertyTransferDataLinkForPatch")
+    testRunner.runTestStepByName("patchTextElementInExp-11")
+    
+    testRunner.runTestStepByName("addCDDElementInExp-11")
+    testRunner.runTestStepByName("Groovy ScripttoGetCDDEditDataLink-11")
+    testRunner.runTestStepByName("DataLinkForCDDPatch-11")
+    testRunner.runTestStepByName("patchCDDElementHtmlExp-11")  
+}</script></con:config></con:testStep><con:testStep type="restrequest" name="createNB" id="09de6e5e-dcb4-4d6c-86c0-6e63989d9add"><con:settings/><con:config service="Elements REST API" resourcePath="" methodName="post" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="createNB" id="42749d3d-9ad3-48e0-b42b-65c7d4c49913" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080/api/v1.0/entities</con:endpoint><con:request>{ 
+  "type" : "journal",
+  "name" : "PerfTestNb${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+  "description" : "For REST API testing",         
+  "ancestors": []
+}</con:request><con:originalUri>http://10.230.24.118/raml/entities</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="X-Authentication-Info" value="x-4x_eGz3xAf3zfaYesgDbim6UY_nQrKi-wVgJpvJixbAprYCh5AUzIkCtkfkOdhI_lap789p6yKqIz2ybgPDl7T0SS0HVnF18ngPhixFOSaD6W_" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="createExpUnderNB-1" id="a124d174-f6ec-4cf0-b572-90191a26fe26"><con:settings/><con:config service="Elements REST API" resourcePath="" methodName="post" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="createExpUnderNB-1" id="42749d3d-9ad3-48e0-b42b-65c7d4c49913" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080/api/v1.0/entities</con:endpoint><con:request>{ 
+  "type" : "experiment",
+  "name" : "PerfTestExp+${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+  "description" : "Exp For REST API testing",         
+  "ancestors": [
+  {
+  "eid":"${createNB#Response#$.eid}",
+  "digest": "0"
+  }
+  ]
+}</con:request><con:originalUri>http://10.230.24.118/raml/entities</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="X-Authentication-Info" value="x-4x_eGz3xAf3zfaYesgDbim6UY_nQrKi-wVgJpvJixbAprYCh5AUzIkCtkfkOdhI_lap789p6yKqIz2ybgPDl7T0SS0HVnF18ngPhixFOSaD6W_" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="addTextElementInExp-11" id="edf33c4d-7eaa-4133-b980-405b6ea433f7"><con:settings/><con:config service="Elements REST API" resourcePath="" methodName="post" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="addTextElementInExp-11" id="86c05e04-e462-46ff-b499-d13b085cd560" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080/api/v1.0/entities</con:endpoint><con:request>{ 
+  "type" : "text",
+  "name" : "APIText+${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",     
+  "ancestors": [
+  {
+   "eid": "${createExpUnderNB-1#Response#$.eid}",
+  "digest": "0"
+  }
+  ]
+}
+
+</con:request><con:originalUri>http://10.230.29.166/</con:originalUri><con:credentials><con:username>edur.boyinipalli@perkinelmer.com</con:username><con:password>test1234</con:password><con:domain/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="X-Authentication-Info" value="x-4x_eGz3xAf3zfaYesgDbim6UY_nQrKi-wVgJpvJixbAprYCh5AUzIkCtkfkOdhI_lap789p6yKqIz2ybgPDl7T0SS0HVnF18ngPhixFOSaD6W_" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy ScripttoGetTextEditDataLink" id="09dbfbee-02c1-49c4-bad4-11ab9bd6f72f"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+//def rungettext = testRunner.runTestStepByName("getMainTextLink");
+def response = context.expand('${addTextElementInExp-11#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def json1 = json.data.link
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransferDataLinkForPatch" id="62771eb8-181d-4059-8817-8d31e81d5fd3"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false"><con:name>getTextEditLink</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScripttoGetTextEditDataLink</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>patchTextElementInExp-11</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="patchTextElementInExp-11" id="110dee47-9b27-4342-be21-861603e3137a"><con:settings/><con:config service="Elements REST API" resourcePath="/{data}" methodName="patch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="patchTextElementInExp-11" id="e185b095-2052-4773-8e1f-61fcfefc701e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080</con:endpoint><con:request>We provide innovative detection, imaging, informatics and service capabilities, with the knowledge and expertise needed to help customers gain earlier and more accurate insights to improve lives and the world around us.
++
+++
++++
++++++
+++++++
+${gettextText#Response}
+>
+>
+>
+>
+>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",</con:request><con:originalUri>http://localhost/api/v1.0/entities/contents/</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="x-4x_eGz3xAf3zfaYesgDbim6UY_nQrKi-wVgJpvJixbAprYCh5AUzIkCtkfkOdhI_lap789p6yKqIz2ybgPDl7T0SS0HVnF18ngPhixFOSaD6W_"/>
+  <con:entry key="data" value="/api/v1.0/entities/contents/text:82a64388-421a-4383-8e69-7fe268e0c948/3e773ea4-b108-4312-a403-fc6e0dc7f01c:NOgGfqyY7Gvzc8sPqAl6oDJqeX60DzGq/0/contents/APIText_1507226069783.html"/>
+</con:parameters><con:parameterOrder><con:entry>data</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="addCDDElementInExp-11" id="19214b27-9f3a-4453-9418-99b28ea7a0ee"><con:settings/><con:config service="Elements REST API" resourcePath="" methodName="post" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="addCDDElementInExp-11" id="86c05e04-e462-46ff-b499-d13b085cd560" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080/api/v1.0/entities</con:endpoint><con:request>{ 
+  "type" : "chemicalDrawing",  
+  "name" : "ChemDraw+${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",   
+  "ancestors": [
+  {
+   "eid": "${createExpUnderNB-1#Response#$.eid}",
+  "digest": "0"
+  }
+  ],
+  "data":{"stoichiometryGridVisible":"off"}
+}
+</con:request><con:originalUri>http://10.230.29.166/</con:originalUri><con:credentials><con:username>edur.boyinipalli@perkinelmer.com</con:username><con:password>test1234</con:password><con:domain/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="X-Authentication-Info" value="x-4x_eGz3xAf3zfaYesgDbim6UY_nQrKi-wVgJpvJixbAprYCh5AUzIkCtkfkOdhI_lap789p6yKqIz2ybgPDl7T0SS0HVnF18ngPhixFOSaD6W_" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy ScripttoGetCDDEditDataLink-11" id="dd93310a-65c6-42c0-a196-4bb89a37743f"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+//def rungettext = testRunner.runTestStepByName("getMainCDDLink");
+def response = context.expand('${addCDDElementInExp-11#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def json1 = json.data.drawing
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="transfer" name="DataLinkForCDDPatch-11" id="ceaa21ba-0b2e-4bb8-b183-d6e5718a89d9"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>id</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScripttoGetCDDEditDataLink-11</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>patchCDDElementHtmlExp-11</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="patchCDDElementHtmlExp-11" id="ea52729d-f8c1-4dbb-a2e6-e2db94bd73d1"><con:settings/><con:config service="Elements REST API" resourcePath="/{data}" methodName="patch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="patchCDDElementHtmlExp-11" id="e185b095-2052-4773-8e1f-61fcfefc701e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080</con:endpoint><con:request><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>↵<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >↵<CDXML CreationProgram="ChemDraw Web 1.7.1.291" color="0" bgcolor="1" ShowAtomQuery="yes" ShowAtomStereo="no" ShowAtomNumber="no" ShowTerminalCarbonLabels="no" HideImplicitHydrogens="no" ShowAtomEnhancedStereo="yes" ShowBondQuery="yes" ShowBondStereo="no" ShowBondRxn="yes" InterpretChemically="yes" ChainAngle="120" BondSpacing="12" BondLength="30" BoldWidth="4" LineWidth="1" MarginWidth="2" HashSpacing="2.7" CaptionJustification="Left" LabelFont="3" CaptionFont="4" LabelSize="10" CaptionSize="12" LabelFace="96" LabelJustification="Auto"><fonttable><font id="3" name="Arial" charset="iso-8859-1"/><font id="4" name="Times New Roman" charset="iso-8859-1"/></fonttable><colortable><color g="1" b="1" r="1"/><color g="0" b="0" r="0"/><color g="0" b="0" r="1"/><color g="1" b="0" r="1"/><color g="1" b="0" r="0"/><color g="1" b="1" r="0"/><color g="0" b="1" r="0"/><color g="0" b="1" r="1"/></colortable><page BoundingBox="0 0 1756 360" DrawingSpace="poster" Width="1756" Height="360" id="25"><fragment id="24"><b Z="1" Display="Solid" B="17" E="18" id="11"/><b Z="6" Display="Solid" B="22" E="17" id="16"/><n Z="7" p="774.02 199.5" id="17"/><b Z="2" Display="Solid" B="18" E="19" id="12"/><n Z="8" p="774.02 229.5" id="18"/><b Z="5" Display="Solid" B="21" E="22" id="15"/><n Z="12" p="800 184.5" id="22"/><b Z="3" Display="Solid" B="19" E="20" id="13"/><n Z="9" p="800 244.5" id="19"/><b Z="4" Display="Solid" B="20" E="21" id="14"/><n Z="11" p="825.98 199.5" id="21"/><n Z="10" p="825.98 229.5" id="20"/></fragment></page></CDXML>]]></con:request><con:originalUri>http://localhost/api/v1.0/entities/contents/</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="x-4x_eGz3xAf3zfaYesgDbim6UY_nQrKi-wVgJpvJixbAprYCh5AUzIkCtkfkOdhI_lap789p6yKqIz2ybgPDl7T0SS0HVnF18ngPhixFOSaD6W_"/>
+  <con:entry key="data" value="/api/v1.0/entities/contents/chemicalDrawing:7cf158b2-9b06-4c78-9e59-4a6b2b83f1d9/:0/0/contents/ChemDraw_1507226075384.cdxml"/>
+</con:parameters><con:parameterOrder><con:entry>data</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="GroovyScript_getEidofTextAdded" id="394d5cf8-cd97-4122-8b5e-6803d48f1e6c" disabled="true"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+//def rungettext = testRunner.runTestStepByName("addTextElementInExp-11");
+def response = context.expand('${addTextElementInExp-11#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def json1 = json.eid
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="restrequest" name="getMainTextLink" id="aab2bf3e-8b50-4b31-bb64-625a64246f42" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/api/v1.0/entities/{eid}" methodName="get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getMainTextLink" id="5d8fcc40-acc9-424c-aba3-e941882f2343" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.22.19:8080</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1.0/text%3Ad100d4a4-1406-430e-a871-da00b8f99475</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="3OMvzmJPzmuWii6prbnFgdpFW9aRNINJGCypzWEvPkMcFihBrh1QzOecOZzmFucdkLCfUSPc_3K0O_Dm6CC6uqgzB1yS1qBsJUvCi-N_3WK9tR8GQ0c8e4q9NKjU6IIbE-lEAENAJn_I0r3-wLcIdQCXe1feQi9cGwCxT88sbjaiLY8hGefyj7Tw-XGdLgWH4QJFzZGhK_udW8NQCrg5uytDz1UED4OFH0HSG0Qp5YI-2RI8X0U92chNZYsqaa3YvFz-I8-oplI2eBEREwAGpeSyLo83fCtyz2eYc-2uhCv-NT3VA8TRdm3gFrw4uw1N4I2BRUi5Nh5yuoCVrRtdmOKRT49DlbvsDuHXwf_3KeNWwjcn4WjU8al91ncAm2XHtlBIi2jKdVh5oBDBS4oj4BWXudgi-gdXS9gsxwdFKXWrlc-V"/>
+  <con:entry key="eid" value="text:a7dd1da5-f16d-4170-9cff-c959029dee03"/>
+</con:parameters><con:parameterOrder><con:entry>eid</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransferFromTextToCDDXauth" id="d56db2c3-ae65-4c2b-8e41-0161161058ce" disabled="true"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false"><con:name>X-Authentication-Info</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>patchTextElementInExp-11</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>getMainCDDLink</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp1</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>getMainCDDLink</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp2</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-2</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp3</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-3</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>exptotext-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>addTextElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-13</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-13</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-11</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-23</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-23</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-33</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-33</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="true" ignoreEmpty="true" entitize="false" transferChildNodes="true" disabled="true"><con:name>linkfromgetToPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy Script</con:sourceStep><con:sourcePath/><con:targetType>data</con:targetType><con:targetStep>TextEditorPatch</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>getTextEditLink</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScripttoGetTextEditDataLink</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>patchTextElementInExp-11</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="getMainCDDLink" id="b7b56003-16dc-4a86-9f99-8ccd9b1b4508" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/api/v1.0/entities/{eid}" methodName="get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getMainCDDLink" id="5d8fcc40-acc9-424c-aba3-e941882f2343" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.22.19:8080</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1.0/text%3Ad100d4a4-1406-430e-a871-da00b8f99475</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="3OMvzmJPzmuWii6prbnFgdpFW9aRNINJGCypzWEvPkMcFihBrh1QzOecOZzmFucdkLCfUSPc_3K0O_Dm6CC6uqgzB1yS1qBsJUvCi-N_3WK9tR8GQ0c8e4q9NKjU6IIbE-lEAENAJn_I0r3-wLcIdQCXe1feQi9cGwCxT88sbjaiLY8hGefyj7Tw-XGdLgWH4QJFzZGhK_udW8NQCrg5uytDz1UED4OFH0HSG0Qp5YI-2RI8X0U92chNZYsqaa3YvFz-I8-oplI2eBEREwAGpeSyLo83fCtyz2eYc-2uhCv-NT3VA8TRdm3gFrw4uw1N4I2BRUi5Nh5yuoCVrRtdmOKRT49DlbvsDuHXwf_3KeNWwjcn4WjU8al91ncAm2XHtlBIi2jKdVh5oBDBS4oj4BWXudgi-gdXS9gsxwdFKXWrlc-V"/>
+  <con:entry key="eid" value="chemicalDrawing:32cb9d16-8eb8-49bf-9fac-fa993764f45d"/>
+</con:parameters><con:parameterOrder><con:entry>eid</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransferCDDDataLinkNullPatch" id="59aee384-9b10-49d6-9304-3fbb980908dd" disabled="true"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false"><con:name>X-Authentication-Info</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>getMainCDDLink</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>patchCDDElementHtmlExp-11</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp1</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>patchCDDElementHtmlExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp2</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-2</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp3</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-3</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>exptotext-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>addTextElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-13</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-13</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-11</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-23</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-23</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-33</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-33</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="true" ignoreEmpty="true" entitize="false" transferChildNodes="true" disabled="true"><con:name>linkfromgetToPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy Script</con:sourceStep><con:sourcePath/><con:targetType>data</con:targetType><con:targetStep>TextEditorPatch</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false"><con:name>getCDDEditLink</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScripttoGetCDDEditDataLink-11</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>patchCDDElementHtmlExp-11</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="groovy" name="Groovy ScripttoGetCDDEditDataLink" id="6776c050-31bd-4cf6-bb99-85073cb8fd67" disabled="true"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+def rungettext = testRunner.runTestStepByName("getMainCDDLink");
+def response = context.expand('${getMainCDDLink#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+//
+def json1 = "api/v1.0/entities/"+json.eid+"?application=eln";
+
+
+
+
+//def json2 = json.data.stoichiometry
+//def json3 = json1+json2
+//log.info(response.data);
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransferCDDDataLinkForPatch" id="b733544e-6be2-4e7a-95dc-ea400be051fc" disabled="true"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false"><con:name>X-Authentication-Info</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>getMainCDDLink</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>patchCDDElementInExp-11</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp1</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>patchCDDElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp2</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-2</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp3</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-3</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>exptotext-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>addTextElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-13</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-13</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-11</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-23</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-23</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-33</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-33</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="true" ignoreEmpty="true" entitize="false" transferChildNodes="true" disabled="true"><con:name>linkfromgetToPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy Script</con:sourceStep><con:sourcePath/><con:targetType>data</con:targetType><con:targetStep>TextEditorPatch</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false"><con:name>getCDDEditLink</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScripttoGetCDDEditDataLink</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>patchCDDElementInExp-11</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="patchCDDElementInExp-11" id="c6e57636-c692-4021-806b-38431a1df839" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/{data}" methodName="patch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="patchCDDElementInExp-11" id="e185b095-2052-4773-8e1f-61fcfefc701e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.22.19:8080</con:endpoint><con:request><![CDATA[{  
+   "digest":"${getMainCDDLink#Response#$.digest}",
+   "ancestors":[  
+      {  
+         "type":"journal",
+         "eid":"journal:72dbdda1-3ca0-4776-abd8-cbe65ff027e2",
+         "name":"Edur-DontvvfeleteNb1501767821220",
+         "digest":"0"
+      },
+      {  
+         "type":"experiment",
+         "eid":"experiment:cc103d72-5efd-4267-963d-819343bfbc40",
+         "name":"APIExp+1501767826262",
+         "digest":"78124195"
+      }
+   ],
+   "data":{  
+      "stoichiometryGridVisible":"on",
+      "preview":"/api/v1.0/entities/chemicalDrawing:dd5f4230-3bee-4eba-96bc-2215ae7860a2/preview/ChemDraw Document.png",
+      "drawingContent":"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!DOCTYPE CDXML SYSTEM \"http://www.cambridgesoft.com/xml/cdxml.dtd\" >\n<CDXML CreationProgram=\"ChemDraw Web 1.7.1.291\" color=\"0\" bgcolor=\"1\" ShowAtomQuery=\"yes\" ShowAtomStereo=\"no\" ShowAtomNumber=\"no\" ShowTerminalCarbonLabels=\"no\" HideImplicitHydrogens=\"no\" ShowAtomEnhancedStereo=\"yes\" ShowBondQuery=\"yes\" ShowBondStereo=\"no\" ShowBondRxn=\"yes\" InterpretChemically=\"yes\" ChainAngle=\"120\" BondSpacing=\"12\" BondLength=\"30\" BoldWidth=\"4\" LineWidth=\"1\" MarginWidth=\"2\" HashSpacing=\"2.7\" CaptionJustification=\"Left\" LabelFont=\"3\" CaptionFont=\"4\" LabelSize=\"10\" CaptionSize=\"12\" LabelFace=\"96\" LabelJustification=\"Auto\"><fonttable><font id=\"3\" name=\"Arial\" charset=\"iso-8859-1\"/><font id=\"4\" name=\"Times New Roman\" charset=\"iso-8859-1\"/></fonttable><colortable><color g=\"1\" b=\"1\" r=\"1\"/><color g=\"0\" b=\"0\" r=\"0\"/><color g=\"0\" b=\"0\" r=\"1\"/><color g=\"1\" b=\"0\" r=\"1\"/><color g=\"1\" b=\"0\" r=\"0\"/><color g=\"1\" b=\"1\" r=\"0\"/><color g=\"0\" b=\"1\" r=\"0\"/><color g=\"0\" b=\"1\" r=\"1\"/></colortable><page BoundingBox=\"0 0 2036 360\" DrawingSpace=\"poster\" Width=\"2036\" Height=\"360\" id=\"171\"><fragment id=\"154\"><b Z=\"22\" Display=\"Solid\" B=\"133\" E=\"135\" id=\"114\"/><b Z=\"29\" Display=\"Solid\" B=\"133\" E=\"134\" id=\"121\"/><b Z=\"40\" Display=\"Solid\" B=\"133\" E=\"146\" id=\"132\"/><n Z=\"41\" p=\"143.49 177.39\" LabelDisplay=\"Auto\" Element=\"7\" NumHydrogens=\"0\" id=\"133\"><t LabelAlignment=\"Right\" LabelJustification=\"Right\" id=\"173\"><s face=\"96\" size=\"12\" font=\"3\">N</s></t></n><b Z=\"24\" Display=\"Solid\" B=\"135\" E=\"137\" id=\"116\"/><n Z=\"43\" p=\"132.58 205.33\" id=\"135\"/><b Z=\"23\" Display=\"Solid\" B=\"134\" E=\"136\" id=\"115\"/><n Z=\"42\" p=\"131.33 150.42\" id=\"134\"/><b Z=\"33\" Display=\"Solid\" B=\"143\" E=\"146\" id=\"125\"/><n Z=\"49\" p=\"173.42 176.87\" id=\"146\"/><b Z=\"27\" Display=\"Solid\" B=\"137\" E=\"140\" id=\"119\"/><b Z=\"28\" Order=\"2\" Display=\"Solid\" B=\"137\" E=\"141\" id=\"120\"/><n Z=\"45\" p=\"105.28 217.23\" id=\"137\"/><b Z=\"25\" Display=\"Solid\" B=\"136\" E=\"138\" id=\"117\"/><b Z=\"26\" Order=\"2\" Display=\"Solid\" B=\"136\" E=\"139\" id=\"118\"/><n Z=\"44\" p=\"103.84 139.49\" id=\"136\"/><b Z=\"30\" Display=\"Solid\" B=\"142\" E=\"143\" id=\"122\"/><n Z=\"46\" p=\"197.18 203.52\" id=\"143\"/><n Z=\"28\" p=\"77.9 205.92\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"1\" id=\"140\"><t LabelAlignment=\"Right\" LabelJustification=\"Right\" id=\"174\"><s face=\"96\" size=\"12\" font=\"3\">O</s><s face=\"96\" size=\"12\" font=\"3\">H</s></t></n><n Z=\"29\" p=\"104.66 247.76\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"0\" id=\"141\"><t LabelAlignment=\"Right\" LabelJustification=\"Right\" id=\"175\"><s face=\"96\" size=\"12\" font=\"3\">O</s></t></n><n Z=\"26\" p=\"76.1 151.02\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"1\" id=\"138\"><t LabelAlignment=\"Right\" LabelJustification=\"Right\" id=\"176\"><s face=\"96\" size=\"12\" font=\"3\">O</s><s face=\"96\" size=\"12\" font=\"3\">H</s></t></n><n Z=\"27\" p=\"102.99 109.53\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"0\" id=\"139\"><t LabelAlignment=\"Right\" LabelJustification=\"Right\" id=\"177\"><s face=\"96\" size=\"12\" font=\"3\">O</s></t></n><b Z=\"31\" Display=\"Solid\" B=\"142\" E=\"144\" id=\"123\"/><b Z=\"32\" Display=\"Solid\" B=\"142\" E=\"145\" id=\"124\"/><n Z=\"33\" p=\"227.53 203.52\" LabelDisplay=\"Auto\" Element=\"7\" NumHydrogens=\"0\" id=\"142\"><t LabelAlignment=\"Auto\" LabelJustification=\"Left\" id=\"178\"><s face=\"96\" size=\"12\" font=\"3\">N</s></t></n><b Z=\"34\" Display=\"Solid\" B=\"144\" E=\"147\" id=\"126\"/><n Z=\"47\" p=\"239.16 176.09\" id=\"144\"/><b Z=\"35\" Display=\"Solid\" B=\"145\" E=\"148\" id=\"127\"/><n Z=\"48\" p=\"239.16 231.8\" id=\"145\"/><b Z=\"36\" Display=\"Solid\" B=\"147\" E=\"149\" id=\"128\"/><b Z=\"37\" Order=\"2\" Display=\"Solid\" B=\"147\" E=\"150\" id=\"129\"/><n Z=\"50\" p=\"266.57 164.97\" id=\"147\"/><b Z=\"38\" Display=\"Solid\" B=\"148\" E=\"151\" id=\"130\"/><b Z=\"39\" Order=\"2\" Display=\"Solid\" B=\"148\" E=\"152\" id=\"131\"/><n Z=\"51\" p=\"266.8 243.52\" id=\"148\"/><n Z=\"37\" p=\"294.71 176.47\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"1\" id=\"149\"><t LabelAlignment=\"Left\" LabelJustification=\"Left\" id=\"179\"><s face=\"96\" size=\"12\" font=\"3\">O</s><s face=\"96\" size=\"12\" font=\"3\">H</s></t></n><n Z=\"38\" p=\"266.57 134.74\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"0\" id=\"150\"><t LabelAlignment=\"Auto\" LabelJustification=\"Auto\" id=\"180\"><s face=\"96\" size=\"12\" font=\"3\">O</s></t></n><n Z=\"39\" p=\"294.21 232.02\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"1\" id=\"151\"><t LabelAlignment=\"Left\" LabelJustification=\"Left\" id=\"181\"><s face=\"96\" size=\"12\" font=\"3\">O</s><s face=\"96\" size=\"12\" font=\"3\">H</s></t></n><n Z=\"40\" p=\"268.26 274.48\" LabelDisplay=\"Auto\" Element=\"8\" NumHydrogens=\"0\" id=\"152\"><t LabelAlignment=\"Auto\" LabelJustification=\"Left\" id=\"182\"><s face=\"96\" size=\"12\" font=\"3\">O</s></t></n></fragment><t Z=\"53\" p=\"187.47 287.48\" Justification=\"Center\" InterpretChemically=\"no\" id=\"170\"><s size=\"12\" font=\"4\">[I]</s></t><graphic Z=\"52\" SupersededBy=\"167\" BoundingBox=\"396.69 192 336.69 192\" GraphicType=\"Line\" ArrowType=\"FullHead\" HeadSize=\"1000\" id=\"153\"/><arrow Z=\"52\" BoundingBox=\"396.69 192 336.69 192\" Head3D=\"396.69 192\" Tail3D=\"336.69 192\" LineType=\"\" HeadSize=\"1000\" ArrowheadType=\"Solid\" ArrowheadCenterSize=\"875\" ArrowheadWidth=\"250\" ArrowheadHead=\"Full\" FillType=\"None\" id=\"167\"/><scheme id=\"183\"><step ReactionStepReactants=\"154\" ReactionStepArrows=\"153\" id=\"184\"/></scheme></page></CDXML>",
+      "stoichiometry":"/api/v1.0/entities/contents/chemicalDrawing:dd5f4230-3bee-4eba-96bc-2215ae7860a2/:${getMainCDDLink#Response#$.digest}/${getMainCDDLink#Response#$.digest}/secondary_contents/ChemDraw Document.json",
+      "image":"/api/v1.0/entities/chemicalDrawing:dd5f4230-3bee-4eba-96bc-2215ae7860a2/image/ChemDraw Document.png",
+      "stoichGridContent":{  
+         "REACTANTS":[  
+
+         ],
+         "PRODUCTS":[  
+
+         ]
+      },
+      "drawing":"/api/v1.0/entities/contents/chemicalDrawing:dd5f4230-3bee-4eba-96bc-2215ae7860a2/:${getMainCDDLink#Response#$.digest}/${getMainCDDLink#Response#$.digest}/contents/ChemDraw Document.cdxml"
+   }
+}
+
+]]></con:request><con:originalUri>http://localhost/api/v1.0/entities/contents/</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="3OMvzmJPzmuWii6prbnFgdpFW9aRNINJGCypzWEvPkMcFihBrh1QzOecOZzmFucdkLCfUSPc_3K0O_Dm6CC6uqgzB1yS1qBsJUvCi-N_3WK9tR8GQ0c8e4q9NKjU6IIbE-lEAENAJn_I0r3-wLcIdQCXe1feQi9cGwCxT88sbjaiLY8hGefyj7Tw-XGdLgWH4QJFzZGhK_udW8NQCrg5uytDz1UED4OFH0HSG0Qp5YI-2RI8X0U92chNZYsqaa3YvFz-I8-oplI2eBEREwAGpeSyLo83fCtyz2eYc-2uhCv-NT3VA8TRdm3gFrw4uw1N4I2BRUi5Nh5yuoCVrRtdmOKRT49DlbvsDuHXwf_3KeNWwjcn4WjU8al91ncAm2XHtlBIi2jKdVh5oBDBS4oj4BWXudgi-gdXS9gsxwdFKXWrlc-V"/>
+  <con:entry key="data" value="api/v1.0/entities/chemicalDrawing:32cb9d16-8eb8-49bf-9fac-fa993764f45d?application=eln"/>
+</con:parameters><con:parameterOrder><con:entry>data</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy ScriptToGetDataLinkForGet" id="6a0e1101-7656-4b0d-b4b3-1605ae8c15fe" disabled="true"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+//def rungettext = testRunner.runTestStepByName("patchTextElementInExp-11");
+def response = context.expand('${patchTextElementInExp-11#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def json1 = json.data.link
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="transfer" name="Copy of Property Transfer" id="03ee74c7-38ee-45d9-bf0f-7eda91c8f3c0" disabled="true"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false"><con:name>X-Authentication-Info</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>getTextLinkAfterPatch</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp1</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>getTextLinkAfterPatch</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp2</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-2</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp3</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-3</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>exptotext-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>addTextElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-13</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-13</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-11</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>patchCDDElementInExp-11</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-23</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-23</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-33</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-33</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false"><con:name>getTextEditorDataLinkForPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScriptToGetDataLinkForGet</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>gettextText</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>getTextEditorDataLinkAfterPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScriptToGetDataLinkForGet</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>gettextText</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="getTextLinkAfterPatch" id="c2e39152-e756-4d7e-9c93-75c2ae73bf4d" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/api/v1.0/entities/{eid}" methodName="get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getTextLinkAfterPatch" id="5d8fcc40-acc9-424c-aba3-e941882f2343" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.22.19:8080</con:endpoint><con:request/><con:originalUri>http://localhost/api/v1.0/text%3Ad100d4a4-1406-430e-a871-da00b8f99475</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="ju4paqSunRSyGuju7sqz_m5uZLL1i22ATPkiR6aigFUkymUwBRwPtyigT_aJAvtq64grT1b2kiGPCIhFM_WBDUFPgmExWmJvrmmQLEzxdN0ROPMjqiUMR1GeGlTf1nmxVxXpozYCVg5IjUSSEJBl7_54czs_KN8jFLbF4104iUxJREdLNhkbZ8xXHcH5dMXA4ovXeNMwjufnTlaJo6LKz4qlDmwYG6_ESV7yZYs_GhFIdXQ9niPqGC4wCrw-aA9g-EXkbAQqXxBDrngqMDCGxqbxB3hCoNo8mtckeCTnYZ_iCVAF6HOKCOvJtP_5H-0gx0YAooVf_OPnNnjPpMwsPkiJe0KlluYW2QxzmsFfpynGuKpVHTrrj0fAUfoyAe3QXSqg5s_oGafpdD18-2fHRMkk1dnlkm2F_83RNa5b00l00_ag"/>
+  <con:entry key="eid" value="text:0e21e712-626c-4bf6-bc33-5987df9e45fb"/>
+</con:parameters><con:parameterOrder><con:entry>eid</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="gettextText" id="7fec4811-6195-432e-b7c7-eec701218ddd" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/{data}" methodName="get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="gettextText" id="617304e7-2504-4ec8-9473-cd1c0976da0a" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080</con:endpoint><con:request/><con:originalUri>http://10.230.29.166/entities/contents/text%3Aa767a812-1616-4fd3-82a3-627a281103b6/997840be-2601-4abd-804c-4c340bbf87b6%3Ao24qEpnrUQcpQ4fprZJSdjpaYxL0UB1x/0/contents/Text</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="ju4paqSunRSyGuju7sqz_m5uZLL1i22ATPkiR6aigFUkymUwBRwPtyigT_aJAvtq64grT1b2kiGPCIhFM_WBDUFPgmExWmJvrmmQLEzxdN0ROPMjqiUMR1GeGlTf1nmxVxXpozYCVg5IjUSSEJBl7_54czs_KN8jFLbF4104iUxJREdLNhkbZ8xXHcH5dMXA4ovXeNMwjufnTlaJo6LKz4qlDmwYG6_ESV7yZYs_GhFIdXQ9niPqGC4wCrw-aA9g-EXkbAQqXxBDrngqMDCGxqbxB3hCoNo8mtckeCTnYZ_iCVAF6HOKCOvJtP_5H-0gx0YAooVf_OPnNnjPpMwsPkiJe0KlluYW2QxzmsFfpynGuKpVHTrrj0fAUfoyAe3QXSqg5s_oGafpdD18-2fHRMkk1dnlkm2F_83RNa5b00l00_ag"/>
+  <con:entry key="data" value="/api/v1.0/entities/contents/text:0e21e712-626c-4bf6-bc33-5987df9e45fb/c948dd60-015b-47a6-a44a-281770388d1f:SUhcnVi_QIiPPe35x.P59y0.XEJwRIf_/31321303/contents/APIText_1501767825586.html"/>
+</con:parameters><con:parameterOrder><con:entry>X-Authentication-Info</con:entry><con:entry>data</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="76356f47-daa2-461f-ba2e-ade3943779fe" disabled="true"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+//def rungettext = testRunner.runTestStepByName("gettextText");
+def response = context.expand('${getTextLinkAfterPatch#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def json1 = json.data.link
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="transfer" name="Copy of Copy of Property Transfer" id="d324ad46-b1c6-4e62-b96d-9d204509258f" disabled="true"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false"><con:name>X-Authentication-Info</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>getTextLinkAfterPatch</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>TextEditorPatch</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp1</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>TextEditorPatch</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp2</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-2</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp3</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-3</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>exptotext-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>addTextElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-13</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-13</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-11</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-23</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-23</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-33</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-33</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false"><con:name>getTextEditorDataLinkForPatch-2</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy Script</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>TextEditorPatch</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>getTextEditorDataLinkAfterPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy ScriptToGetDataLinkForGet</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>gettextText</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="TextEditorPatch" id="9289c2b0-7dac-4273-8881-f584a1588730" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/{data}" methodName="patch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="TextEditorPatch" id="e185b095-2052-4773-8e1f-61fcfefc701e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.22.19:8080</con:endpoint><con:request>${gettextText#Response}
+>
+>
+>
+>
+>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>>
+>
+>
+>
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",
+
+Signals Notebook is a 100% cloud-based collaborative platform, so your lab
+notebook is available anytime, anywhere and on multiple devices. All you
+need is a Web browser and an internet connection. Signals Notebook lets
+you connect and share data with colleagues and collaborators anywhere in
+the world. The current document provides an overview of the main features
+in Signals Notebook. Detailed information will be provided later in a complete
+User Guide and other HELP materials.${=System.currentTimeMillis() + ((int)(Math.random()*10000))}",</con:request><con:originalUri>http://localhost/api/v1.0/entities/contents/</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="ju4paqSunRSyGuju7sqz_m5uZLL1i22ATPkiR6aigFUkymUwBRwPtyigT_aJAvtq64grT1b2kiGPCIhFM_WBDUFPgmExWmJvrmmQLEzxdN0ROPMjqiUMR1GeGlTf1nmxVxXpozYCVg5IjUSSEJBl7_54czs_KN8jFLbF4104iUxJREdLNhkbZ8xXHcH5dMXA4ovXeNMwjufnTlaJo6LKz4qlDmwYG6_ESV7yZYs_GhFIdXQ9niPqGC4wCrw-aA9g-EXkbAQqXxBDrngqMDCGxqbxB3hCoNo8mtckeCTnYZ_iCVAF6HOKCOvJtP_5H-0gx0YAooVf_OPnNnjPpMwsPkiJe0KlluYW2QxzmsFfpynGuKpVHTrrj0fAUfoyAe3QXSqg5s_oGafpdD18-2fHRMkk1dnlkm2F_83RNa5b00l00_ag"/>
+  <con:entry key="data" value="/api/v1.0/entities/contents/text:0e21e712-626c-4bf6-bc33-5987df9e45fb/c948dd60-015b-47a6-a44a-281770388d1f:SUhcnVi_QIiPPe35x.P59y0.XEJwRIf_/31321303/contents/APIText_1501767825586.html"/>
+</con:parameters><con:parameterOrder><con:entry>data</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Copy of Groovy ScripttoGetTextEditDataLink" id="eaad7f5d-bae9-4df2-bbcf-6ca2347aa761" disabled="true"><con:settings/><con:config><script>//import groovy.util.GroovyTestSuite 
+//import junit.framework.Test 
+//import junit.textui.TestRunner
+//def ss  = TestRunner.getText.getPropertyValue( "data" )
+
+//def myTestCase = testRunner.runTestStepByName("getText")
+//testRunner.testCase.getPropertyValue( "getText ", data )
+
+//log.info(response)
+//testCase.setPropertyValue( " LocalPropertyName ", someValue )
+//def response = context.expand( '${getText#Response}' )
+//
+////testRunner.testCase.setPropertyValue("data", response)
+//
+//def getLocalPropValue = testRunner.testCase.getPropertyValue("data")
+//
+//log.info(getLocalPropValue)
+//log.info(testSuite.name 
+
+import com.eviware.soapui.support.XmlHolder
+import groovy.json.JsonSlurper 
+import java.util.logging.Logger
+
+//def rungettext = testRunner.runTestStepByName("addTextElementInExp-11");
+def response = context.expand('${TextEditorPatch#response}')
+def slurper = new JsonSlurper()
+def json = slurper.parseText response
+def json1 = json.data.link
+
+//log.info(json.data).replaceAll("Hello","Bye");
+
+//def str2 = str1.toString().replaceAll('\\)',' ')
+
+//	log.info(json.data.link)
+	
+//def json = context.expand(json)
+  //  log.info(json)
+//Logger logger = Logger.getLogger("")
+//logger.info (log.info(json.data.link))
+
+//def json2 = log.info(json.data.link)
+
+//
+//json.data.eachWithIndex
+//{
+//data, index ->
+//log.info(json.data.link)
+//log.info  (${index}.link)
+////log.info "totalResults: ${index}"
+////log.info "data: ${data.link}"
+////log.info "Item name: ${item.name}"
+////log.info "Item resource type: ${item.resourceType}"
+////log.info "Item status: ${item.status}"
+//}
+
+
+
+//def req = new XmlSlurper().parseText(mockRequest.requestContent)
+//log.info "Customer #${req.foo.data.CustomerNumber}"
+
+//def responseJson = slurper.parseText(getText.responseConte‌​nt) 
+//log.info (responseJson.eid)
+
+//
+//def project = testRunner.testCase.testSuite.project ;
+//def tcase = project.testSuites["ChangeRetentionByCopyDemoSuite"].testCases["Milestone2"] ; 
+//def tstep = testRunner.testCase.getTestStepByName("getText")
+//def dataa = tstep.getPropertyValue("response")
+//def property = dataa.getProperty("eid");
+
+//def responsedata = ("&lt;data>");
+//def dataa1 =tstep.getPropertyValue('${getText#Response#$.eid}');  
+//"${createNB#Response#$.eid}"
+//log.info(responsedata)
+//log.info(dataa1.toString());
+//def responseTestSuite1 = tstep.getPropertyValue("response");
+
+//log.info(responseTestSuite1.toString());
+
+</script></con:config></con:testStep><con:testStep type="transfer" name="Copy of PropertyTransferDataLinkForPatch" id="2e61292f-96bd-4a4e-a149-c03eb006ab41" disabled="true"><con:description/><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="true" entitize="false" transferChildNodes="false" disabled="true"><con:name>X-Authentication-Info</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>Add1stDataTextElement-11</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp1</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>Add1stDataTextElement-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp2</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-2</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>nbtoexp3</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>createExpUnderNB-3</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>exptotext-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:targetType xsi:nil="true"/><con:targetStep>addTextElementInExp-11</con:targetStep><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-13</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-13</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-11</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-11</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-12</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Copy of patch - patchtext</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-12</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-23</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-23</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-21</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-21</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-22</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-2</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-22</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptotext-33</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addTextElementInExp-33</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-31</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-31</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="true" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>exptocdd-32</con:name><con:sourceType>X-Authentication-Info</con:sourceType><con:sourceStep>createExpUnderNB-3</con:sourceStep><con:sourcePath xsi:nil="true"/><con:targetType>X-Authentication-Info</con:targetType><con:targetStep>addChemDrawElementExp-32</con:targetStep><con:targetPath xsi:nil="true"/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="true" ignoreEmpty="true" entitize="false" transferChildNodes="true" disabled="true"><con:name>linkfromgetToPatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Groovy Script</con:sourceStep><con:sourcePath/><con:targetType>data</con:targetType><con:targetStep>TextEditorPatch</con:targetStep><con:targetPath/><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" ignoreEmpty="false" entitize="false" transferChildNodes="false"><con:name>getTextEditLinkafter2ndpatch</con:name><con:sourceType>result</con:sourceType><con:sourceStep>Copy of Groovy ScripttoGetTextEditDataLink</con:sourceStep><con:targetType>data</con:targetType><con:targetStep>patchTextElementInExp-11</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Add1stDataTextElement-11" id="f4d77bdd-96bf-4091-98fb-5a2d77a3a548" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="/{data}" methodName="patch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Add1stDataTextElement-11" id="45294f40-2cc8-477a-8b1d-0acca5abb3f4" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080/raml</con:endpoint><con:request>
+
+ 
+  </con:request><con:originalUri>http://10.230.29.166/raml/comments</con:originalUri><con:assertion type="Valid HTTP Status Codes" id="ba5254ac-6b09-4e08-ac7f-df1a8aade60c" name="Valid HTTP Status Codes"><con:settings/><con:configuration><codes>200,201,400</codes></con:configuration></con:assertion><con:credentials><con:username>edur.boyinipalli@perkinelmer.com</con:username><con:password>test1234</con:password><con:domain/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value=""/>
+  <con:entry key="data" value=""/>
+</con:parameters><con:parameterOrder><con:entry>data</con:entry><con:entry>X-Authentication-Info</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="link" id="fdd180a6-c44c-47b8-867f-c4a8c2aa01e6" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>link</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>addTextElementInExp-11</con:sourceStep><con:sourcePath>context.testCase.testSuite.setPropertyValue('PROPERTY_NAME', 'PROPERTY_VALUE')</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>patch - patchtext</con:targetStep><con:targetPath>context.testCase.testSuite.getPropertyValue('PROPERTY_NAME')</con:targetPath><con:type>XQUERY</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Copy of patch - patchtext" id="c4e561d0-e73c-4b31-8b9e-ede833f5912f" disabled="true"><con:settings/><con:config service="Elements REST API" resourcePath="" methodName="get" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Copy of patch - patchtext" id="90596dfd-e91a-40b6-8008-121f7c7a760a" mediaType="text/xml" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://10.230.24.118:8080/raml</con:endpoint><con:request>&lt;data contentType="null" contentLength="0">&lt;![CDATA[]]&gt;&lt;/data></con:request><con:originalUri>http://10.230.24.118/raml</con:originalUri><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="X-Authentication-Info" value="HIAPnr0TtbuJSJ_LWpE1oHhGsORflRjzJzo64lgW3dMDlDjUu26jYJDVrTUgoDq7XHtTxf-VRRQdivaIlc_sgJHrdn4_Ftq_S55hw86WPEyTeZs4nEQTHtwOkLHTQc0vo5avH0HzAVbbSC9bRGiOD7DfJeHvyvWN2JLdEGRP2HCPo8FRzQvoLVGso77NwyWw1qUBPvaEOJfHIovaMA_uHF3GH503Oa2Zn19YpqrIHXzr6Lsww3UbSnc2s2NF-Piu8Cwtc1Y317CZ7rWRbp--hIBlv2vkbOX9rcc1gVoppUGMIH3Zj_zH968eRBQeM3Tf9vibrNBWL1hbKyla0f8sXFIdx6d_xv-7PO1MXNqfUT99KlhdPIpL7GGWJOrS_EgykxAM6CZVU8GhB8RnkuBfZgSy8PWfcF96RbCAttkHQql5ZRh1"/>
+  <con:entry key="versionedUuid" value="ae276fee-6925-4361-8acc-4e8123a563ac:s909mczW4qfGyRCmgvm2tDcHzHkYTgvC"/>
+  <con:entry key="filename" value="Text.html"/>
+  <con:entry key="digest" value="55368076"/>
+  <con:entry key="eid" value="text:9f70c29c-a2f4-4d95-8a1b-01f46b2fa4a8"/>
+</con:parameters><con:parameterOrder><con:entry>X-Authentication-Info</con:entry><con:entry>include</con:entry><con:entry>type</con:entry><con:entry>exclude</con:entry><con:entry>depth</con:entry><con:entry>start</con:entry><con:entry>end</con:entry><con:entry>limit</con:entry><con:entry>offset</con:entry><con:entry>application</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:loadTest id="681febdc-1536-482a-bf34-0d179375db45" name="LoadTest 1"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:reportParameters/></con:loadTest><con:properties><con:property><con:name>getText</con:name><con:value>{"data":{"link":"/api/v1.0/entities/contents/text:24941c33-a9a6-457c-8c63-dd779a537c1d/6d8f2d48-7d11-4c39-bec7-2dc9dd91579c:dsooGCZjoWgpiyWdx3OnTnniRvOHvfl4/36116795/contents/Text.html"},"eid":"text:24941c33-a9a6-457c-8c63-dd779a537c1d","name":"Text","type":"text","createdAt":"2017-07-26T14:38:01.477Z","modifiedAt":"2017-07-26T19:01:28.070Z","createdBy":{"userId":"307","userName":"acs.elements@cheerful.com","firstName":"Acs","lastName":"Elements","picture":{}},"editedBy":{"userId":"307","userName":"acs.elements@cheerful.com","firstName":"Acs","lastName":"Elements","picture":{}},"locked":false,"readOnly":false,"digest":"36116795","accessLevel":"A","owner":{"user":{"userId":"307","userName":"acs.elements@cheerful.com","firstName":"Acs","lastName":"Elements","picture":{}}},"trashed":false,"template":false,"starred":false,"descendants":{"digest":"0"},"ancestors":[{"type":"journal","eid":"journal:7a982f80-da6f-472f-a909-60573cfceeb3","name":"Edur-DontvvfeleteNb1501079682938","digest":"0"},{"type":"experiment","eid":"experiment:9ef1b26b-db37-46eb-b0ad-01d2c916d9f3","name":"dsvsdvsvd","digest":"26798301"}],"flags":{"canTrash":true,"canWrite":true,"isMine":true,"canComment":true,"canEdit":true},"comments":{"digest":"1501084958566","count":1}}</con:value></con:property><con:property><con:name>data</con:name><con:value>{"data":{"link":"/api/v1.0/entities/contents/text:24941c33-a9a6-457c-8c63-dd779a537c1d/6d8f2d48-7d11-4c39-bec7-2dc9dd91579c:dsooGCZjoWgpiyWdx3OnTnniRvOHvfl4/36116795/contents/Text.html"},"eid":"text:24941c33-a9a6-457c-8c63-dd779a537c1d","name":"Text","type":"text","createdAt":"2017-07-26T14:38:01.477Z","modifiedAt":"2017-07-26T19:01:28.070Z","createdBy":{"userId":"307","userName":"acs.elements@cheerful.com","firstName":"Acs","lastName":"Elements","picture":{}},"editedBy":{"userId":"307","userName":"acs.elements@cheerful.com","firstName":"Acs","lastName":"Elements","picture":{}},"locked":false,"readOnly":false,"digest":"36116795","accessLevel":"A","owner":{"user":{"userId":"307","userName":"acs.elements@cheerful.com","firstName":"Acs","lastName":"Elements","picture":{}}},"trashed":false,"template":false,"starred":false,"descendants":{"digest":"0"},"ancestors":[{"type":"journal","eid":"journal:7a982f80-da6f-472f-a909-60573cfceeb3","name":"Edur-DontvvfeleteNb1501079682938","digest":"0"},{"type":"experiment","eid":"experiment:9ef1b26b-db37-46eb-b0ad-01d2c916d9f3","name":"dsvsdvsvd","digest":"26798301"}],"flags":{"canTrash":true,"canWrite":true,"isMine":true,"canComment":true,"canEdit":true},"comments":{"digest":"1501084958566","count":1}}</con:value></con:property></con:properties><con:reportParameters/></con:testCase>

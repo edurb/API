@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="169b494b-fa37-4e92-a793-0b0cfdf2c4b4" name="Copy of PerformanceTestingDev" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="169b494b-fa37-4e92-a793-0b0cfdf2c4b4fileName">Copy-of-PerformanceTestingDev</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>PARALLELL</con:runType><con:properties/><con:reportParameters/></con:testSuite>
